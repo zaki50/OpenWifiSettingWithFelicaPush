@@ -7,6 +7,8 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
 
+import jp.andeb.kushikatsu.helper.KushikatsuHelper;
+
 public class MainActivity extends Activity {
     /** Called when the activity is first created. */
     @Override
@@ -18,7 +20,7 @@ public class MainActivity extends Activity {
     public void onButtonClick(View view) {
         final Intent intent = new Intent(WifiManager.ACTION_PICK_WIFI_NETWORK);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        startActivity(KushikatsuHelper.buildIntentForSendIntent(intent));
     }
 
 }
