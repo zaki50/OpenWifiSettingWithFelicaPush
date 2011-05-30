@@ -11,7 +11,8 @@ import android.widget.Toast;
 import jp.andeb.kushikatsu.helper.KushikatsuHelper;
 
 public class MainActivity extends Activity {
-    private static final int KUSHIKATUS_REQUEST_CODE = 1;
+    private static final int KUSHIKATUS_PUSH_REQUEST_CODE = 1;
+    private static final int KUSHIKATUS_INSTALL_REQUEST_CODE = 2;
 
     /** Called when the activity is first created. */
     @Override
@@ -23,14 +24,16 @@ public class MainActivity extends Activity {
     public void onButtonClick(View view) {
         final Intent intent = new Intent(WifiManager.ACTION_PICK_WIFI_NETWORK);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivityForResult(KushikatsuHelper.buildIntentForSendIntent(intent),
-                KUSHIKATUS_REQUEST_CODE);
+        KushikatsuHelper.startKushikatsuForResult(this,
+                KushikatsuHelper.buildIntentForSendIntent(intent),
+                KUSHIKATUS_PUSH_REQUEST_CODE, KUSHIKATUS_INSTALL_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode != KUSHIKATUS_REQUEST_CODE) {
+        if (requestCode != KUSHIKATUS_PUSH_REQUEST_CODE
+                && requestCode != KUSHIKATUS_INSTALL_REQUEST_CODE) {
             return;
         }
         if (resultCode == Activity.RESULT_OK
